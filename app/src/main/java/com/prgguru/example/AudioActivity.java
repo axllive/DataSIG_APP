@@ -85,8 +85,6 @@ public class AudioActivity extends Activity {
         audioView = this.getCurrentFocus();
         //mantendo a tela ligada ao executar essa activity
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        //instanciando para não gerar NULLPOINTEREXCEPTION
-        mPlayer = new MediaPlayer();
     }
 
     @Override
@@ -146,6 +144,7 @@ public class AudioActivity extends Activity {
 
     //inicia reprodução
     public void startPlaying(View v) {
+        mPlayer = new MediaPlayer();
         //iniciando o cronômetro
         if (chronometerTimeSpentPlaying == 0) {
             setContentView(R.layout.audio_activity_playing);
@@ -541,6 +540,7 @@ public class AudioActivity extends Activity {
                 audios.add(new audioObjects(listOfFiles[i].getName(), "" + time, "12/12"));
             }
         }
+        mPlayer = null;
         //encapsulando o arraylist com os nomes dos arquivos ao ArrayAdapter
         ArrayAdapter<audioObjects> adapter = new myAudiosAdapter();
         ListView list = (ListView) findViewById(R.id.GallerylistView);

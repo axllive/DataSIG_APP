@@ -1,0 +1,30 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 16
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "com.prgguru.example"
+        minSdkVersion 10
+        targetSdkVersion 21
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/values-v21'] } }
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:18.0.0'
+    compile 'com.google.code.gson:gson:2.2.2'
+    compile 'com.android.support:gridlayout-v7:18.0.0'
+    compile 'com.android.support:appcompat-v7:19.1.0'
+    compile files('libs/android-async-http-1.4.4.jar')
+    compile 'com.googlecode.mp4parser:isoparser:1.1.17'
+    compile 'com.github.wseemann:FFmpegMediaMetadataRetriever:1.0.3'
+}

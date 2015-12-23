@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
+    android:gravity="bottom|end"
+    android:orientation="vertical"
+    tools:context=".LoginActivity" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:background="#cc6600"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/title"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="41dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="#cc6600"
+            android:onClick="addUser"
+            android:text="@string/plus"
+            android:textColor="#ffd700"
+            android:textSize="30sp" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_above="@+id/LinearLayout02"
+            >
+        </ListView>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"></LinearLayout>
+        <LinearLayout
+            android:id="@+id/LinearLayout02"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_alignParentBottom="true">
+
+            <Button
+                android:id="@+id/username"
+                android:background="#C0C0C0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/sair"
+                android:background="@color/datasigBrown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:textColor="#FFFFFF"
+                android:text="@string/sair" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">DataSIG</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Configurações</string>
+    <string name="title">Coletas</string>
+    <string name="plus">"+"</string>
+    <string name="adduser">"Selecione o tipo de dados a coletar:"</string>
+    <string name="user">"Aguarde coordenadas"</string>
+    <string name="hint">"PH"</string>
+    <string name="hint2">"Coliformes"</string>
+    <string name="save">"Salvar"</string>
+    <string name="cancel">"Cancelar"</string>
+    <string name="welcome">"Seja bem vindo!"</string>
+    <string name="adduseractivitylabel">"Nova Coleta"</string>
+    <string name="savedUserLogin">""</string>
+
+    <string-array name="nav_drawer_items">
+        <item>Home</item>
+        <item>Find People</item>
+        <item>Photos</item>
+        <item>Communities</item>
+        <item>Pages</item>
+        <item>What\'s Hot</item>
+    </string-array>
+
+    <string name="title_activity_login">DataSig</string>
+    <string name="email">insira seu e-mail</string>
+    <string name="passwordstring">insira sua senha</string>
+    <string name="facaseulogin">Faça seu login:</string>
+    <string name="esqueciasenha">Esqueceu a senha?</string>
+    <string name="entrar">ENTRAR</string>
+    <string name="datatypeAir">Qualidade do Ar</string>
+    <string name="datatypeWater">Qualidade da Água</string>
+    <string name="plantData">Dados sobre Plantas</string>
+    <string name="takePhoto">Tirar foto</string>
+    <string name="recordAudio">Gravar áudio</string>
+    <string name="proceed">Prosseguir com a coleta</string>
+    <string name="Camera">Camera</string>
+    <string name="sair">Sair</string>
+    <string name="PHCloriformes">PH/Cloriformes</string>
+    <string name="h20">H2O</string>
+    <string name="co2">CO2</string>
+    <string name="H2OCO2">H2O/CO2</string>
+    <string name="plantas">Plantas</string>
+    <string name="tamCaule">Tamanho Caule</string>
+    <string name="corFlor">Cor da Flor</string>
+    <string name="numPetalas">Número de Pétalas</string>
+    <string name="title_activity_project">projectActivity</string>
+    <string name="selectProject">Selecione o projeto</string>
+    <string name="voltar">Voltar</string>
+    <string name="galeria">galeria</string>
+    <string name="Gravaraudio">Gravar audio</string>
+    <string name="gravando">Gravando</string>
+    <string name="pausado">Gravação Pausada</string>
+
+</resources>

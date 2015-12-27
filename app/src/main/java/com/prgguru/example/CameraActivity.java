@@ -174,7 +174,30 @@ public class CameraActivity extends Activity implements LocationListener {
         );
 
     }
-     /**
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        if (mCamera != null) {
+            mCamera.stopPreview();
+            mCamera.setPreviewCallback(null);
+            mCamera.lock();
+            mCamera.release();
+            mCamera=null;
+        }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if (mCamera != null) {
+            mCameraView = new CameraView(this, mCamera);//create a SurfaceView to show camera data
+            FrameLayout camera_view = (FrameLayout) findViewById(R.id.camera_view);
+            camera_view.addView(mCameraView);//add the SurfaceView to the layout
+        }
+    }
+
+    /**
      * Cria o arquivo e o diretorio para salvar a foto
      */
     private static File getOutputMediaFile(int type) {

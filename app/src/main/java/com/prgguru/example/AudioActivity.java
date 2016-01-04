@@ -4,10 +4,12 @@ package com.prgguru.example;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.PowerManager;
 import android.os.SystemClock;
+import android.view.MenuItem;
 import android.view.View;
 import android.util.Log;
 import android.media.MediaRecorder;
@@ -16,9 +18,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,7 +78,9 @@ public class AudioActivity extends Activity {
     private boolean alreadyPlayed = false;
     //controle de conteúdo da galeria
     private List<audioObjects> audios = new ArrayList<audioObjects>();
-
+    //Botão do menu da galeria
+    ImageButton optionMenu;
+    private long millis;
     /*
     Métodos Override do sistema Android
      */
@@ -85,6 +92,10 @@ public class AudioActivity extends Activity {
         audioView = this.getCurrentFocus();
         //mantendo a tela ligada ao executar essa activity
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        optionMenu = (ImageButton) findViewById(R.id.optionMenuGallery);
+
+
     }
 
     @Override
@@ -110,7 +121,7 @@ public class AudioActivity extends Activity {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         audioView = this.getCurrentFocus();
 
@@ -325,7 +336,7 @@ public class AudioActivity extends Activity {
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 try {
                     FileChannel fc = new RandomAccessFile(mediaStorageDir.getAbsolutePath() +
-                            File.separator + "DataSIG_AUDIO" + timeStamp + ".mp4", "rw").getChannel();
+                            File.separator + "AUDIO_" + timeStamp + ".mp4", "rw").getChannel();
                     out.writeContainer(fc);
                     fc.close();
                 } catch (IOException e) {
@@ -336,7 +347,7 @@ public class AudioActivity extends Activity {
                 fp = new File(file2);
                 fp.delete();
                 file1 = mediaStorageDir.getAbsolutePath() +
-                        File.separator + "DataSIG_AUDIO" + timeStamp + ".mp4";
+                        File.separator + "AUDIO_" + timeStamp + ".mp4";
                 setCurrentFilename(file1);
                 break;
             //fim case 3----------------------------------------------------------------------------
@@ -514,50 +525,102 @@ public class AudioActivity extends Activity {
     public void gallery(View v) {
         //setando o layout correto
         setContentView(R.layout.audio_activity_gallery);
+        optionMenu = (ImageButton) findViewById(R.id.optionMenuGallery);
         //capturando a lista de arquivos da pasta [TEMPORÁRIO]
         File folder = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_MUSIC), "DataSIG_AUDIO");
-        ;
+
+
         File[] listOfFiles = folder.listFiles();
         //tentativa de capturar a duração dos áudios
         //[TEMPORÁRIO- Correto será incluir no ato da gravação no BD interno]
-        mPlayer = new MediaPlayer();
-        long millis;
-        String time;
-        //adicionando a lista de arquivos
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                try {
-                    mPlayer.setDataSource(listOfFiles[i].getAbsolutePath());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                millis = mPlayer.getDuration();
-                long second = (millis / 1000) % 60;
-                long minute = (millis / (1000 * 60)) % 60;
-                long hour = (millis / (1000 * 60 * 60)) % 24;
-                time = String.format("%02d:%02d:%02d:%d", hour, minute, second, millis);
-                audios.add(new audioObjects(listOfFiles[i].getName(), "" + time, "12/12"));
-            }
-        }
-        mPlayer = null;
-        //encapsulando o arraylist com os nomes dos arquivos ao ArrayAdapter
-        ArrayAdapter<audioObjects> adapter = new myAudiosAdapter();
-        ListView list = (ListView) findViewById(R.id.GallerylistView);
-        //... e setando o array ao ListView
-        list.setAdapter(adapter);
-        //cirando as opções de onClick no ListView
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View viewClicked,
-                                    int position, long id) {
 
-                audioObjects clickedAudio = audios.get(position);
-                String message = "You clicked position " + position
-                        + " Which is car make " + clickedAudio.getFilename();
-                Toast.makeText(AudioActivity.this, message, Toast.LENGTH_LONG).show();
+        //adicionando a lista de arquivos
+        if (folder.exists() && listOfFiles.length >= 0) {
+            mPlayer = new MediaPlayer();
+
+            String time;
+            for (int i = 0; i < listOfFiles.length; i++) {
+                if (listOfFiles[i].isFile()) {
+                    try {
+                        mPlayer.setDataSource(listOfFiles[i].getAbsolutePath());
+                        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                        mPlayer.prepare();
+                        mPlayer.setOnPreparedListener( new MediaPlayer.OnPreparedListener() {
+
+                            @Override
+                            public void onPrepared(MediaPlayer mPlayer) {
+                                millis = mPlayer.getDuration();
+
+                            }
+                        });
+                        long second = (millis / 1000) % 60;
+                        long minute = (millis / (1000 * 60)) % 60;
+                        long hour = (millis / (1000 * 60 * 60)) % 24;
+                        time = String.format("%02d:%02d:%02d:%d", hour, minute, second, millis);
+                        audios.add(new audioObjects(listOfFiles[i].getName(), "" + time));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                mPlayer.reset();
             }
-        });
+
+            mPlayer = null;
+            //encapsulando o arraylist com os nomes dos arquivos ao ArrayAdapter
+            ArrayAdapter<audioObjects> adapter = new myAudiosAdapter();
+            ListView list = (ListView) findViewById(R.id.GallerylistView);
+            //... e setando o array ao ListView
+            list.setAdapter(adapter);
+            //cirando as opções de onClick no ListView
+            /*
+            optionMenu = (ImageButton) list.findViewById(R.id.optionMenuGallery);
+            optionMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Creating the instance of PopupMenu
+
+                    PopupMenu popup = new PopupMenu(AudioActivity.this, optionMenu);
+                    //Inflating the Popup using xml file
+                    popup.getMenuInflater()
+                            .inflate(R.menu.galleryoptionsmenu, popup.getMenu());
+
+                    //registering popup with OnMenuItemClickListener
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            Intent i;
+                            switch (item.getItemId()) {
+                                case R.id.upload:
+
+                                    break;
+                                case R.id.ouvir:
+
+                                    break;
+                                case R.id.deletar:
+
+                                    break;
+                                case R.id.compartilhar:
+
+                                    break;
+                                case R.id.detalhes:
+
+                                    break;
+
+                            }
+                            return true;
+                        }
+                    });
+
+                    popup.show(); //showing popup menu
+                }
+            });
+        */
+        } else
+
+        {
+            Toast.makeText(AudioActivity.this, "Não há arquivos a exibir.", Toast.LENGTH_LONG).show();
+        }
     }
 
     /*
@@ -592,10 +655,6 @@ public class AudioActivity extends Activity {
             // Year:
             TextView yearText = (TextView) itemView.findViewById(R.id.item_txtYear);
             yearText.setText(currentAudio.getFileLenght());
-
-            // Condition:
-            TextView condionText = (TextView) itemView.findViewById(R.id.item_txtCondition);
-            condionText.setText(currentAudio.getCreationDate());
 
             return itemView;
         }

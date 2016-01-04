@@ -54,5 +54,6 @@
     <string name="Gravaraudio">Gravar audio</string>
     <string name="gravando">Gravando</string>
     <string name="pausado">Gravação Pausada</string>
+    <string name="nomedoaudio"><u>Nome_do_audio</u></string>
 
 </resources>

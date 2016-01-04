@@ -43,15 +43,12 @@ public class MainActivity extends ActionBarActivity {
     Button btn;
     Button username;
     Button sair;
-    public static boolean isActiveActivity = false;
     private static String IS_ACTIVE = "activityControl";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);  //redirecionando para a activity de login, não a de coleta
-        //controle de activity
-        this.isActiveActivity = true;
         //Get User records from SQLite DB
         ArrayList<HashMap<String, String>> userList = controller.getAllUsers(); //na verdade é a lista de etiquetas lançadas
         btn = (Button) findViewById(R.id.button1);
@@ -138,23 +135,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onPause(){
         super.onPause();
     }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save the user's current game state
-        savedInstanceState.putBoolean(IS_ACTIVE, isActiveActivity);
-        // Always call the superclass so it can save the view hierarchy state
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        // Always call the superclass so it can restore the view hierarchy
-        super.onRestoreInstanceState(savedInstanceState);
-        // Restore state members from saved instance
-        isActiveActivity = savedInstanceState.getBoolean(IS_ACTIVE);
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

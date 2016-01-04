@@ -1,44 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/item_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:adjustViewBounds="true"
-        android:maxHeight="80dp"
-        android:maxWidth="80dp"
         android:src="@drawable/play_icon_256" />
 
-    <TextView
-        android:id="@+id/item_txtCondition"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/item_txtYear"
+    <ImageButton
+        android:id="@+id/optionMenuGallery"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/item_icon"
         android:layout_alignParentRight="true"
-        android:text="Duração?"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:focusableInTouchMode="true"
+        android:maxHeight="80dp"
+        android:maxWidth="80dp"
+        android:background="@android:color/transparent"
+        android:src="@mipmap/ic_menu" />
 
     <TextView
         android:id="@+id/item_txtYear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="tempo do áudio"
         android:layout_alignBottom="@+id/item_icon"
-        android:layout_alignLeft="@+id/item_txtMake"
-        android:layout_marginBottom="16dp"
-        android:text="tempo do áudio" />
+        android:layout_toRightOf="@+id/item_icon" />
 
     <TextView
         android:id="@+id/item_txtMake"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/item_txtCondition"
+        android:paddingLeft="10dp"
+        android:singleLine="false"
+        android:layout_above="@+id/item_txtYear"
         android:layout_toRightOf="@+id/item_icon"
-        android:text="Nome_do_audio"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="@string/nomedoaudio"
+        android:textSize="15dp" />
+
 
 </RelativeLayout>
